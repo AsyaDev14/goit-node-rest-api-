@@ -5,6 +5,7 @@ import {
   updateContactSchema,
 } from "../schemas/contactsSchemas.js";
 import validateBody from "../helpers/validateBody.js";
+import { isValidId } from "../middlewares/isValidId.js";
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", contactsControllers.getAllContacts);
@@ -25,4 +26,10 @@ contactsRouter.put(
   contactsControllers.updateContact
 );
 
+contactsRouter.patch(
+  "/:id/favorite",
+  isValidId,
+  validateBody(updateContactSchema),
+  contactsControllers.updateStatusContact
+);
 export default contactsRouter;
