@@ -6,6 +6,8 @@ import {
 } from "../schemas/contactsSchemas.js";
 import validateBody from "../helpers/validateBody.js";
 import { isValidId } from "../middlewares/isValidId.js";
+import upload from "../middlewares/upload.js";
+
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", contactsControllers.getAllContacts);
@@ -16,6 +18,7 @@ contactsRouter.delete("/:id", contactsControllers.deleteContact);
 
 contactsRouter.post(
   "/",
+  upload.single("photo"),
   validateBody(createContactSchema),
   contactsControllers.createContact
 );
